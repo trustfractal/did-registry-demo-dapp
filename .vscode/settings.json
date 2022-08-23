@@ -1,0 +1,7 @@
+{
+  "cSpell.words": ["Typegen", "unconfigured"],
+  "[typescript]": {
+    "editor.formatOnSave": false,
+    "editor.tabSize": 2
+  }
+}
