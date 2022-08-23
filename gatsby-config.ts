@@ -2,7 +2,7 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `DID registry API demo`,
+    title: `DID registry demo`,
     siteUrl: `https://did-registry.demo.fractal.id/`,
     author: "@trustfractal",
     image: "/static/icons/favicon-32x32.png",
