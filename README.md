@@ -25,3 +25,9 @@ yarn clean && yarn build
 
 yarn serve
 ```
+
+## Deployment
+
+This is deployed as a Netlify app: https://app.netlify.com/sites/fractal-did-registry-demo-dapp/overview. It has https://did-registry.demo.fractal.id/ as the primary name.
+
+Every movement of the `main` branch will be published automatically.
