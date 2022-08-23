@@ -58,7 +58,7 @@ export const PurchaseEligibility = () => {
   }
 
   return (
-    <Card title="Purchase eligibility" width="75%">
+    <Card title="Purchase eligibility">
       <CardBodyContainer>
         <Text size={_TextSizes.EXTRA_SMALL}>
           Based on the KYC Status, your eligibility is ...
