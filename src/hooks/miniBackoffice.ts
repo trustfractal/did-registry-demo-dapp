@@ -36,7 +36,7 @@ interface KYCApproved {
   disapproveUser: () => Promise<void>;
 }
 
-type Backoffice =
+export type Backoffice =
   | Unconfigured
   | UnregisteredUser
   | KYCAbsent

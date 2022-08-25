@@ -43,7 +43,10 @@ const HeroDotsContainer = styled.div`
   width: 100vw;
 `;
 
-const HeroRow = styled.div`
+type HeroStyleProps = {
+  justifyContent?: string;
+};
+const HeroRow = styled.div<HeroStyleProps>`
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -51,7 +54,7 @@ const HeroRow = styled.div`
   @media (min-width: 768px) {
     text-align: left;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: ${props => props?.justifyContent ? props.justifyContent : 'space-between'};
     margin-bottom: 2em;
   }
 `;
@@ -88,14 +91,14 @@ export default function Hero() {
     switch (backoffice.status) {
       case "UnregisteredUser":
         status =
-          "but your address is not in the DID Registry. So, you can't purchase yet! Use the Backoffice control in step #2 to update the DID Registry.";
+          " but your address is not in the DID Registry. So, you can't purchase yet! Use the Backoffice control in step #2 to update the DID Registry.";
         break;
       case "KYCAbsent":
         status =
           " and your address is in the DID Registry but it is not in the KYC List. So, you can't purchase yet! Use the Backoffice control in step #2 to update the DID Registry.";
         break;
       case "KYCApproved":
-        status = "Wallet Address was found in the KYC List.";
+        status = ", your address is in the DID Registry AND you are in the KYC List. So, you can purchase! ";
         break;
       case "Loading":
         status = " but your status is getting updated in the Registry.";
@@ -157,12 +160,12 @@ export default function Hero() {
               >
                 1.
                 {active
-                  ? ` Your wallet is connected ${registryStatus}`
+                  ? ` Your wallet is connected${registryStatus}`
                   : " Connect your wallet."}
               </Text>
             </SubtitleContainer>
           </HeroRow>
-          <HeroRow>
+          <HeroRow justifyContent="space-evenly" >
             <div style={{ width: "40%" }}>
               <Connect />
             </div>
