@@ -5,7 +5,7 @@ import { Button, Card as OriginalCard, Text } from "../ui";
 import { TextSizes } from "../ui/Text";
 import { CenteredElement, CenteredFlexElement } from "../ui/CenteredElement";
 import { unreachable } from "../../lib/types";
-import {Backoffice} from "hooks/miniBackoffice";
+import { Backoffice } from "hooks/miniBackoffice";
 
 const Card = styled(OriginalCard)`
   color: white;
@@ -112,8 +112,9 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
     <Card title="Actions performed by Fractal's servers" width="90%">
       <CardBodyContainer>
         <Text>
-          This window shows you how Fractal updates the DID Registry. The
-          user would not be asked to do these transactions but you can perform them for this demo.{" "}
+          This window shows you how Fractal updates the DID Registry. The user
+          would not be asked to do these transactions but you can perform them
+          for this demo.{" "}
         </Text>{" "}
         <Text />
         <CenteredElement>{content}</CenteredElement>
