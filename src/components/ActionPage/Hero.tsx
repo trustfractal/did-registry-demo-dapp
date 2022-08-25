@@ -54,7 +54,8 @@ const HeroRow = styled.div<HeroStyleProps>`
   @media (min-width: 768px) {
     text-align: left;
     flex-direction: row;
-    justify-content: ${props => props?.justifyContent ? props.justifyContent : 'space-between'};
+    justify-content: ${(props) =>
+      props?.justifyContent ? props.justifyContent : "space-between"};
     margin-bottom: 2em;
   }
 `;
@@ -98,7 +99,8 @@ export default function Hero() {
           " and your address is in the DID Registry but it is not in the KYC List. So, you can't purchase yet! Use the Backoffice control in step #2 to update the DID Registry.";
         break;
       case "KYCApproved":
-        status = ", your address is in the DID Registry AND you are in the KYC List. So, you can purchase! ";
+        status =
+          ", your address is in the DID Registry AND you are in the KYC List. So, you can purchase! ";
         break;
       case "Loading":
         status = " but your status is getting updated in the Registry.";
@@ -165,7 +167,7 @@ export default function Hero() {
               </Text>
             </SubtitleContainer>
           </HeroRow>
-          <HeroRow justifyContent="space-evenly" >
+          <HeroRow justifyContent="space-evenly">
             <div style={{ width: "40%" }}>
               <Connect />
             </div>
@@ -187,7 +189,7 @@ export default function Hero() {
                   </Text>
                 </HeroRow>
                 <HeroRow>
-                  <MiniBackoffice backoffice={backoffice}/>
+                  <MiniBackoffice backoffice={backoffice} />
                 </HeroRow>
               </>
             ) : (

@@ -78,7 +78,9 @@ export const PurchaseEligibility = () => {
           {userInList ? (
             <Button width="50%">Purchase</Button>
           ) : (
-            <Button width="50%" disabled>Purchase</Button>
+            <Button width="50%" disabled>
+              Purchase
+            </Button>
           )}
         </CenteredElement>
       </CardBodyContainer>
