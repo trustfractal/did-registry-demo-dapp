@@ -3,7 +3,7 @@ name: Pull request
 on:
   pull_request:
   push:
-    branches: master
+    branches: main
 
 # This will cancel previous jobs in case of new push.
 concurrency:
