@@ -10,6 +10,7 @@ import MiniBackoffice from "./MiniBackoffice";
 import PurchaseEligibility from "./PurchaseEligibility";
 import HeroDots from "../../assets/images/hero_dots.svg";
 import useMiniBackoffice from "../../hooks/miniBackoffice";
+import { unreachable } from "../../lib/types";
 
 const HeroSection = styled.section`
   height: calc(100vh - 76px);
@@ -54,8 +55,7 @@ const HeroRow = styled.div<HeroStyleProps>`
   @media (min-width: 768px) {
     text-align: left;
     flex-direction: row;
-    justify-content: ${(props) =>
-      props?.justifyContent ? props.justifyContent : "space-between"};
+    justify-content: ${(props) => props.justifyContent ?? "space-between"};
     margin-bottom: 2em;
   }
 `;
@@ -105,12 +105,18 @@ export default function Hero() {
       case "Loading":
         status = " but your status is getting updated in the Registry.";
         break;
-
+      case "Error":
+        status = " but there was an error accessing the Registry.";
+        break;
+      case "Unconfigured":
+        status = " but the Registry thinks your wallet is not connected.";
+        break;
       default:
+        unreachable(backoffice);
     }
 
     setRegistryStatus(status);
-  }, [backoffice?.status]);
+  }, [backoffice.status]);
 
   return (
     <HeroSection>
