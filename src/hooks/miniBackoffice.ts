@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ContractTransaction, providers } from "ethers";
 import { keccak256 } from "ethers/lib/utils";
 
@@ -115,6 +115,11 @@ export const useMiniBackoffice = (
   const [fractalId, setFractalId] = useState<Loadable<string>>("go_fetch");
   const [kycStatus, setKycStatus] = useState<Loadable<boolean>>("go_fetch");
   const signer = library?.getSigner();
+
+  useEffect(() => {
+    setFractalId("go_fetch");
+    setKycStatus("go_fetch");
+  }, [account])
 
   if (!account || !signer || !chainId || chainId !== GOERLI_CHAIN_ID) {
     return { status: "Unconfigured" };
