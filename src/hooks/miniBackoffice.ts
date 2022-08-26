@@ -119,7 +119,7 @@ export const useMiniBackoffice = (
   useEffect(() => {
     setFractalId("go_fetch");
     setKycStatus("go_fetch");
-  }, [account])
+  }, [account]);
 
   if (!account || !signer || !chainId || chainId !== GOERLI_CHAIN_ID) {
     return { status: "Unconfigured" };
