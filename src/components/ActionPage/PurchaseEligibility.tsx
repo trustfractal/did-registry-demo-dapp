@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { Card, Text } from "../ui";
+import { Button, Card, Text } from "../ui";
 import { TextSizes as _TextSizes } from "../ui/Text";
 import { CenteredElement } from "../ui/CenteredElement";
 import fractalRegistry from "../../contracts/FractalRegistry";
@@ -50,21 +50,35 @@ export const PurchaseEligibility = () => {
   } else if (userInList === undefined) {
     content = <>Checking chain state... ⏱</>;
   } else if (userInList === false) {
-    content = <>Not able to make purchase. ❌</>;
+    content = (
+      <>
+        You are <strong>NOT</strong> in the KYC List in the DID Registry so are
+        not able to make purchase.
+      </>
+    );
   } else if (userInList === true) {
-    content = <>Cleared for purchase! ✅</>;
+    content = (
+      <>
+        You <strong>ARE</strong> in the KYC List in the DID Registry so you are
+        cleared to make a purchase!
+      </>
+    );
   } else {
     unreachable(userInList);
   }
 
   return (
-    <Card title="Purchase eligibility" width="75%">
+    <Card title="Purchase eligibility">
       <CardBodyContainer>
-        <Text size={_TextSizes.EXTRA_SMALL}>
-          Based on the KYC Status, your eligibility is ...
-        </Text>{" "}
-        <NewLine />
-        <CenteredElement>{content}</CenteredElement>
+        <CenteredElement>
+          <Text size={_TextSizes.EXTRA_SMALL}>{content}</Text>
+        </CenteredElement>
+        <CenteredElement>
+          <NewLine />
+          <Button width="50%" disabled={!userInList}>
+            Purchase
+          </Button>
+        </CenteredElement>
       </CardBodyContainer>
     </Card>
   );

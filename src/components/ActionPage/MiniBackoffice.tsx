@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import useWeb3 from "../../hooks/web3";
 import { Button, Card as OriginalCard, Text } from "../ui";
 import { TextSizes } from "../ui/Text";
 import { CenteredElement, CenteredFlexElement } from "../ui/CenteredElement";
-import useMiniBackoffice from "../../hooks/miniBackoffice";
 import { unreachable } from "../../lib/types";
+import { Backoffice } from "../../hooks/miniBackoffice";
 
 const Card = styled(OriginalCard)`
   color: white;
@@ -29,10 +28,7 @@ export const SingleText = ({ children }: { children: string }) => (
   </>
 );
 
-export const MiniBackoffice = () => {
-  const { account, chainId, library } = useWeb3();
-  const backoffice = useMiniBackoffice(account, chainId, library);
-
+export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
   let content;
   switch (backoffice.status) {
     case "Unconfigured":
@@ -42,8 +38,11 @@ export const MiniBackoffice = () => {
       content = (
         <>
           <Text size={TextSizes.EXTRA_SMALL}>
-            ❓ Wallet Address not found - click the button to simulate
-            onboarding with Fractal.
+            ❓ Wallet Address not found. Click the button to add your wallet
+            address to the DID Registry. This is what would happen when your
+            user onboards with Fractal with a <strong>uniqueness</strong>{" "}
+            journey. Clicking the button will initiate a transaction from your
+            wallet.
           </Text>
           <NewLine />
           <CenteredElement>
@@ -58,8 +57,12 @@ export const MiniBackoffice = () => {
       content = (
         <>
           <Text size={TextSizes.EXTRA_SMALL}>
-            🚫 KYC absent - click a button to either add your wallet address to
-            the KYC list or remove it from the Registry.
+            🚫 You are not in the KYC List. Click a button to either add your
+            wallet address to the KYC list or remove it from the Registry.
+            Clicking <strong>Add KYC</strong> is what would happen when your
+            user onboards with Fractal with a KYC level like{" "}
+            <strong>Plus</strong>. Clicking the button will initiate a
+            transaction from your wallet.
           </Text>
           <NewLine />
           <CenteredFlexElement>
@@ -78,8 +81,9 @@ export const MiniBackoffice = () => {
       content = (
         <>
           <Text size={TextSizes.EXTRA_SMALL}>
-            ✅ KYC Approved - click the button to remove your wallet address
-            from the KYC list.
+            ✅ You are KYC Approved! Clicking the button will remove you from
+            the KYC List. Clicking the button will initiate a transaction from
+            your wallet.
           </Text>
           <NewLine />
           <CenteredElement>
@@ -108,14 +112,11 @@ export const MiniBackoffice = () => {
     <Card title="Actions performed by Fractal's servers" width="90%">
       <CardBodyContainer>
         <Text>
-          These transaction show you how Fractal updates the DID Registry. The
-          user would not be asked to do these transactions.{" "}
-        </Text>{" "}
-        <Text />
-        <Text size={TextSizes.EXTRA_SMALL}>
-          The status of your wallet address in the Fractal DID Registry is ...
+          This window shows you how Fractal updates the DID Registry. The user
+          would not be asked to do these transactions but you can perform them
+          for this demo.
         </Text>
-        <NewLine />
+        <Text />
         <CenteredElement>{content}</CenteredElement>
       </CardBodyContainer>
     </Card>
