@@ -11,6 +11,7 @@ import PurchaseEligibility from "./PurchaseEligibility";
 import HeroDots from "../../assets/images/hero_dots.svg";
 import useMiniBackoffice from "../../hooks/miniBackoffice";
 import { unreachable } from "../../lib/types";
+import Collapsible from "../ui/Collapsible";
 
 const HeroSection = styled.section`
   height: calc(100vh - 76px);
@@ -128,36 +129,39 @@ export default function Hero() {
           <HeroRow>
             <HeroTitleColumn>
               <Title>Fractal&apos;s DID Registry User Demo</Title>
-              <SubtitleContainer>
-                <Text size="20px" lineHeight="30px">
-                  This demo shows you how changes to the{" "}
-                  <strong>DID Registry</strong> impact how your users will
-                  experience logging in to your dApp.
-                  <NewLine />
-                  <NewLine />
-                  When you connect your wallet to this dApp in Step #1 below,
-                  the dApp automatically checks the DID Registry to see if you
-                  are eligible to purchase. If your wallet address is in the DID
-                  Registry and you are in the KYC List, then you are eligible to
-                  purchase.
-                  <NewLine />
-                  <NewLine />
-                  You can use Step #2 below to update the DID Registry. If your
-                  wallet address is not in the DID Registry, you can add it. If
-                  you are not in the KYC List, you can add yourself. In a
-                  similar way, you can remove yourself from the KYC List or
-                  remove your wallet address from DID Registry. These are NOT
-                  actions your user can take but meant to demonstrate how your
-                  dApp can query the DID Registry and you can show or hide
-                  actions (like voting or purchasing) based on the status in the
-                  DID Registry.
-                  <NewLine />
-                  <NewLine />
-                  <strong>You will need Görli ETH</strong> to complete this demo
-                  - get some <a href="https://goerli-faucet.pk910.de/">here</a>{" "}
-                  or <a href="https://goerlifaucet.com/">here.</a>
-                </Text>
-              </SubtitleContainer>
+              <Collapsible>
+                <SubtitleContainer>
+                  <Text size="20px" lineHeight="30px">
+                    This demo shows you how changes to the{" "}
+                    <strong>DID Registry</strong> impact how your users will
+                    experience logging in to your dApp.
+                    <NewLine />
+                    <NewLine />
+                    When you connect your wallet to this dApp in Step #1 below,
+                    the dApp automatically checks the DID Registry to see if you
+                    are eligible to purchase. If your wallet address is in the
+                    DID Registry and you are in the KYC List, then you are
+                    eligible to purchase.
+                    <NewLine />
+                    <NewLine />
+                    You can use Step #2 below to update the DID Registry. If
+                    your wallet address is not in the DID Registry, you can add
+                    it. If you are not in the KYC List, you can add yourself. In
+                    a similar way, you can remove yourself from the KYC List or
+                    remove your wallet address from DID Registry. These are NOT
+                    actions your user can take but meant to demonstrate how your
+                    dApp can query the DID Registry and you can show or hide
+                    actions (like voting or purchasing) based on the status in
+                    the DID Registry.
+                    <NewLine />
+                    <NewLine />
+                    <strong>You will need Görli ETH</strong> to complete this
+                    demo - get some{" "}
+                    <a href="https://goerli-faucet.pk910.de/">here</a> or{" "}
+                    <a href="https://goerlifaucet.com/">here.</a>
+                  </Text>
+                </SubtitleContainer>
+              </Collapsible>
             </HeroTitleColumn>
           </HeroRow>
           <HeroRow>
