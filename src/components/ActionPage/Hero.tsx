@@ -11,6 +11,7 @@ import PurchaseEligibility from "./PurchaseEligibility";
 import HeroDots from "../../assets/images/hero_dots.svg";
 import useMiniBackoffice from "../../hooks/miniBackoffice";
 import { unreachable } from "../../lib/types";
+import Collapsible from "../ui/Collapsible";
 
 const HeroSection = styled.section`
   height: calc(100vh - 76px);
@@ -128,6 +129,7 @@ export default function Hero() {
           <HeroRow>
             <HeroTitleColumn>
               <Title>Fractal&apos;s DID Registry User Demo</Title>
+              <Collapsible>
               <SubtitleContainer>
                 <Text size="20px" lineHeight="30px">
                   This demo shows you how changes to the{" "}
@@ -158,6 +160,7 @@ export default function Hero() {
                   or <a href="https://goerlifaucet.com/">here.</a>
                 </Text>
               </SubtitleContainer>
+              </Collapsible>
             </HeroTitleColumn>
           </HeroRow>
           <HeroRow>
