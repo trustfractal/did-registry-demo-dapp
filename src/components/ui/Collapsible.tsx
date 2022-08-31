@@ -12,15 +12,11 @@ const Collapsible = ({ children }: CollapsibleProps): ReactElement => {
   const Open = () => <ArrowDown width={height} height={width}></ArrowDown>;
   const Closed = () => <ArrowRight width={height} height={width}></ArrowRight>;
   const [open, setOpen] = useState(false);
-  const [icon, setIcon] = useState(<Closed />);
-  const toggle = () => {
-    setIcon(!open ? <Open /> : <Closed />);
-    setOpen(!open);
-  };
+  const toggle = () => setOpen(!open);
 
   return (
     <div onClick={() => toggle()}>
-      {icon}
+      {open ? <Open /> : <Closed />}
       {open && <div className="toggle">{children}</div>}
     </div>
   );
