@@ -3,5 +3,11 @@
   "[typescript]": {
     "editor.formatOnSave": false,
     "editor.tabSize": 2
-  }
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "html",
+    "typescriptreact"
+  ]
 }
