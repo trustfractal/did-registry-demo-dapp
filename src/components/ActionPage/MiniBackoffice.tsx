@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Button, Card as OriginalCard, Text } from "../ui";
+import Collapsible from "../ui/Collapsible";
 import { TextSizes } from "../ui/Text";
 import { CenteredElement, CenteredFlexElement } from "../ui/CenteredElement";
 import { unreachable } from "../../lib/types";
@@ -28,6 +29,22 @@ export const SingleText = ({ children }: { children: string }) => (
   </>
 );
 
+const addKYC = async (
+  registerUser: () => Promise<void>,
+  approveUser: () => Promise<void>
+): Promise<void> => {
+  await registerUser();
+  await approveUser();
+};
+
+const removeKYC = async (
+  unRegisterUser: () => Promise<void>,
+  disapproveUser: () => Promise<void>
+): Promise<void> => {
+  await disapproveUser();
+  await unRegisterUser();
+};
+
 export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
   let content;
   switch (backoffice.status) {
@@ -37,17 +54,26 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
     case "UnregisteredUser":
       content = (
         <>
-          <Text size={TextSizes.EXTRA_SMALL}>
-            ❓ Wallet Address not found. Click the button to add your wallet
-            address to the DID Registry. This is what would happen when your
-            user onboards with Fractal with a <strong>uniqueness</strong>{" "}
-            journey. Clicking the button will initiate a transaction from your
-            wallet.
+          <Text size={TextSizes.SMALL}>
+            You are not in the Registry. Click the button to add yourself.
+            <Collapsible fill={"white"}>
+              <>
+                Normally, you would need to onboard with a KYC level like{" "}
+                <strong>Plus</strong>. Then, once your information is approved
+                you would be added to Registry by Fractal. Clicking the{" "}
+                <strong>Add ME to Registry</strong> button{" "}
+                <strong>simulates</strong> that process.{" "}
+              </>
+            </Collapsible>
           </Text>
           <NewLine />
           <CenteredElement>
-            <Button onClick={backoffice.registerUser as () => void}>
-              Add Wallet Address
+            <Button
+              onClick={() =>
+                void addKYC(backoffice.registerUser, backoffice.approveUser)
+              }
+            >
+              Add ME to Registry
             </Button>
           </CenteredElement>
         </>
@@ -80,15 +106,21 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
     case "KYCApproved":
       content = (
         <>
-          <Text size={TextSizes.EXTRA_SMALL}>
-            ✅ You are KYC Approved! Clicking the button will remove you from
-            the KYC List. Clicking the button will initiate a transaction from
-            your wallet.
+          <Text size={TextSizes.SMALL}>
+            You are KYC Approved! Clicking the button will remove you from the
+            KYC List.
           </Text>
           <NewLine />
           <CenteredElement>
-            <Button onClick={backoffice.disapproveUser as () => void}>
-              Remove KYC
+            <Button
+              onClick={() =>
+                void removeKYC(
+                  backoffice.disapproveUser,
+                  backoffice.unRegisterUser
+                )
+              }
+            >
+              Remove ME from Registry
             </Button>
           </CenteredElement>
         </>
@@ -117,7 +149,7 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
           for this demo.
         </Text>
         <Text />
-        <CenteredElement>{content}</CenteredElement>
+        {content}
       </CardBodyContainer>
     </Card>
   );

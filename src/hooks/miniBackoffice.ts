@@ -21,6 +21,7 @@ interface Loading {
 interface UnregisteredUser {
   status: "UnregisteredUser";
   registerUser: () => Promise<void>;
+  approveUser: () => Promise<void>;
 }
 
 interface KYCAbsent {
@@ -34,6 +35,7 @@ interface KYCApproved {
   status: "KYCApproved";
   fractalId: string;
   disapproveUser: () => Promise<void>;
+  unRegisterUser: () => Promise<void>;
 }
 
 export type Backoffice =
@@ -143,6 +145,9 @@ export const useMiniBackoffice = (
       registerUser: reportTransactionTo(setFractalId, () =>
         selfServeRegistryOperator.connect(signer).addSelf(keccak256(account))
       ),
+      approveUser: reportTransactionTo(setKycStatus, () =>
+        selfServeRegistryOperator.connect(signer).addSelfToList(KYCList)
+      ),
     };
   }
 
@@ -160,6 +165,9 @@ export const useMiniBackoffice = (
       fractalId,
       disapproveUser: reportTransactionTo(setKycStatus, () =>
         selfServeRegistryOperator.connect(signer).removeSelfFromList(KYCList)
+      ),
+      unRegisterUser: reportTransactionTo(setFractalId, () =>
+        selfServeRegistryOperator.connect(signer).removeSelf()
       ),
     };
   }
