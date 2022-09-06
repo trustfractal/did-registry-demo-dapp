@@ -29,14 +29,6 @@ export const SingleText = ({ children }: { children: string }) => (
   </>
 );
 
-const addKYC = async (
-  registerUser: () => Promise<void>,
-  approveUser: () => Promise<void>
-): Promise<void> => {
-  await registerUser();
-  await approveUser();
-};
-
 const removeKYC = async (
   unRegisterUser: () => Promise<void>,
   disapproveUser: () => Promise<void>
@@ -68,11 +60,7 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
           </Text>
           <NewLine />
           <CenteredElement>
-            <Button
-              onClick={() =>
-                void addKYC(backoffice.registerUser, backoffice.approveUser)
-              }
-            >
+            <Button onClick={backoffice.registerAndApproveUser as () => void}>
               Add ME to Registry
             </Button>
           </CenteredElement>
