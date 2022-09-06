@@ -3,14 +3,23 @@ import ArrowRight from "../../assets/icons/arrow-right.svg";
 import ArrowDown from "../../assets/icons/arrow-down.svg";
 
 type CollapsibleProps = React.PropsWithChildren<{
+  fill?: string;
   children: ReactElement;
 }>;
 
-const Collapsible = ({ children }: CollapsibleProps): ReactElement => {
+const Collapsible = ({
+  fill = "black",
+  children,
+}: CollapsibleProps): ReactElement => {
   const height = 24;
   const width = 24;
-  const Open = () => <ArrowDown width={height} height={width}></ArrowDown>;
-  const Closed = () => <ArrowRight width={height} height={width}></ArrowRight>;
+
+  const Open = () => (
+    <ArrowDown fill={fill} width={height} height={width}></ArrowDown>
+  );
+  const Closed = () => (
+    <ArrowRight fill={fill} width={height} height={width}></ArrowRight>
+  );
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
 

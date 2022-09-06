@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { Text, Title, TopComponent } from "../ui";
 import { TextLineHeights, TextWeights } from "../ui/Text";
+import Collapsible from "../ui/Collapsible";
 
 import useWeb3 from "../../hooks/web3";
 import Connect from "./Connect";
@@ -11,7 +12,6 @@ import PurchaseEligibility from "./PurchaseEligibility";
 import HeroDots from "../../assets/images/hero_dots.svg";
 import useMiniBackoffice from "../../hooks/miniBackoffice";
 import { unreachable } from "../../lib/types";
-import Collapsible from "../ui/Collapsible";
 
 const HeroSection = styled.section`
   height: calc(100vh - 76px);
