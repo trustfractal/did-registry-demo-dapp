@@ -20,8 +20,7 @@ interface Loading {
 
 interface UnregisteredUser {
   status: "UnregisteredUser";
-  registerUser: () => Promise<void>;
-  approveUser: () => Promise<void>;
+  addUserToRegistry: () => Promise<void>;
 }
 
 interface KYCAbsent {
@@ -29,13 +28,13 @@ interface KYCAbsent {
   fractalId: string;
   approveUser: () => Promise<void>;
   unRegisterUser: () => Promise<void>;
+  addUserToRegistry: () => Promise<void>;
 }
 
 interface KYCApproved {
   status: "KYCApproved";
   fractalId: string;
-  disapproveUser: () => Promise<void>;
-  unRegisterUser: () => Promise<void>;
+  removeUserFromRegistry: () => Promise<void>;
 }
 
 export type Backoffice =
@@ -142,11 +141,10 @@ export const useMiniBackoffice = (
   if (fractalId === ZERO_USER) {
     return {
       status: "UnregisteredUser",
-      registerUser: reportTransactionTo(setFractalId, () =>
-        selfServeRegistryOperator.connect(signer).addSelf(keccak256(account))
-      ),
-      approveUser: reportTransactionTo(setKycStatus, () =>
-        selfServeRegistryOperator.connect(signer).addSelfToList(KYCList)
+      addUserToRegistry: reportTransactionTo(setFractalId, () =>
+        selfServeRegistryOperator
+          .connect(signer)
+          .addSelfToRegistry(keccak256(account), KYCList)
       ),
     };
   }
@@ -163,15 +161,15 @@ export const useMiniBackoffice = (
     return {
       status: "KYCApproved",
       fractalId,
-      disapproveUser: reportTransactionTo(setKycStatus, () =>
-        selfServeRegistryOperator.connect(signer).removeSelfFromList(KYCList)
-      ),
-      unRegisterUser: reportTransactionTo(setFractalId, () =>
-        selfServeRegistryOperator.connect(signer).removeSelf()
+      removeUserFromRegistry: reportTransactionTo(setFractalId, () =>
+        selfServeRegistryOperator
+          .connect(signer)
+          .removeSelfFromRegistry(KYCList)
       ),
     };
   }
 
+  // should we remove this? We should never get here. If so, remove from MiniBackOffice component as well.
   return {
     status: "KYCAbsent",
     fractalId,
@@ -180,6 +178,11 @@ export const useMiniBackoffice = (
     ),
     unRegisterUser: reportTransactionTo(setFractalId, () =>
       selfServeRegistryOperator.connect(signer).removeSelf()
+    ),
+    addUserToRegistry: reportTransactionTo(setKycStatus, () =>
+      selfServeRegistryOperator
+        .connect(signer)
+        .addSelfToRegistry(fractalId, KYCList)
     ),
   };
 };

@@ -26,16 +26,20 @@ export interface SelfServeRegistryOperatorInterface extends utils.Interface {
   functions: {
     "addSelf(bytes32)": FunctionFragment;
     "addSelfToList(string)": FunctionFragment;
+    "addSelfToRegistry(bytes32, string)": FunctionFragment;
     "removeSelf()": FunctionFragment;
     "removeSelfFromList(string)": FunctionFragment;
+    "removeSelfFromRegistry(string)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "addSelf"
       | "addSelfToList"
+      | "addSelfToRegistry"
       | "removeSelf"
       | "removeSelfFromList"
+      | "removeSelfFromRegistry"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -47,11 +51,19 @@ export interface SelfServeRegistryOperatorInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "addSelfToRegistry",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "removeSelf",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "removeSelfFromList",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeSelfFromRegistry",
     values: [PromiseOrValue<string>]
   ): string;
 
@@ -60,9 +72,17 @@ export interface SelfServeRegistryOperatorInterface extends utils.Interface {
     functionFragment: "addSelfToList",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "addSelfToRegistry",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "removeSelf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "removeSelfFromList",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "removeSelfFromRegistry",
     data: BytesLike
   ): Result;
 
@@ -106,11 +126,22 @@ export interface SelfServeRegistryOperator extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    addSelfToRegistry(
+      fractalId: PromiseOrValue<BytesLike>,
+      listId: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     removeSelf(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     removeSelfFromList(
+      listId: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    removeSelfFromRegistry(
       listId: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -126,11 +157,22 @@ export interface SelfServeRegistryOperator extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  addSelfToRegistry(
+    fractalId: PromiseOrValue<BytesLike>,
+    listId: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   removeSelf(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   removeSelfFromList(
+    listId: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  removeSelfFromRegistry(
     listId: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -146,9 +188,20 @@ export interface SelfServeRegistryOperator extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    addSelfToRegistry(
+      fractalId: PromiseOrValue<BytesLike>,
+      listId: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     removeSelf(overrides?: CallOverrides): Promise<void>;
 
     removeSelfFromList(
+      listId: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    removeSelfFromRegistry(
       listId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -167,11 +220,22 @@ export interface SelfServeRegistryOperator extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    addSelfToRegistry(
+      fractalId: PromiseOrValue<BytesLike>,
+      listId: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     removeSelf(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     removeSelfFromList(
+      listId: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    removeSelfFromRegistry(
       listId: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -188,11 +252,22 @@ export interface SelfServeRegistryOperator extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    addSelfToRegistry(
+      fractalId: PromiseOrValue<BytesLike>,
+      listId: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     removeSelf(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     removeSelfFromList(
+      listId: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeSelfFromRegistry(
       listId: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

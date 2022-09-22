@@ -42,6 +42,24 @@ export const abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "fractalId",
+        type: "bytes32",
+      },
+      {
+        internalType: "string",
+        name: "listId",
+        type: "string",
+      },
+    ],
+    name: "addSelfToRegistry",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "removeSelf",
     outputs: [],
@@ -61,9 +79,22 @@ export const abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "listId",
+        type: "string",
+      },
+    ],
+    name: "removeSelfFromRegistry",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
-export const address = "0x75ADb60A0bD28EE81133872401A76A55E215ED47";
+export const address = "0x2e190e260EcCd70f8b73F646F37a72D1271a8854";
 
 export const selfServeRegistryOperator = new Contract(
   address,

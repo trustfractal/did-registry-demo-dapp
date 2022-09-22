@@ -30,19 +30,15 @@ export const SingleText = ({ children }: { children: string }) => (
 );
 
 const addKYC = async (
-  registerUser: () => Promise<void>,
-  approveUser: () => Promise<void>
+  addUserToRegistry: () => Promise<void>
 ): Promise<void> => {
-  await registerUser();
-  await approveUser();
+  await addUserToRegistry();
 };
 
 const removeKYC = async (
-  unRegisterUser: () => Promise<void>,
-  disapproveUser: () => Promise<void>
+  removeUserFromRegistry: () => Promise<void>
 ): Promise<void> => {
-  await disapproveUser();
-  await unRegisterUser();
+  await removeUserFromRegistry();
 };
 
 export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
@@ -56,23 +52,19 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
         <>
           <Text size={TextSizes.SMALL}>
             You are not in the Registry. Click the button to add yourself.
-            <Collapsible fill={"white"}>
-              <>
-                Normally, you would need to onboard with a KYC level like{" "}
-                <strong>Plus</strong>. Then, once your information is approved
-                you would be added to Registry by Fractal. Clicking the{" "}
-                <strong>Add ME to Registry</strong> button{" "}
-                <strong>simulates</strong> that process.{" "}
-              </>
-            </Collapsible>
           </Text>
+          <Collapsible fill={"white"}>
+            <>
+              Normally, you would need to onboard with a KYC level like{" "}
+              <strong>Plus</strong>. Then, once your information is approved you
+              would be added to Registry by Fractal. Clicking the{" "}
+              <strong>Add ME to Registry</strong> button{" "}
+              <strong>simulates</strong> that process.{" "}
+            </>
+          </Collapsible>
           <NewLine />
           <CenteredElement>
-            <Button
-              onClick={() =>
-                void addKYC(backoffice.registerUser, backoffice.approveUser)
-              }
-            >
+            <Button onClick={() => void addKYC(backoffice.addUserToRegistry)}>
               Add ME to Registry
             </Button>
           </CenteredElement>
@@ -113,12 +105,7 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
           <NewLine />
           <CenteredElement>
             <Button
-              onClick={() =>
-                void removeKYC(
-                  backoffice.disapproveUser,
-                  backoffice.unRegisterUser
-                )
-              }
+              onClick={() => void removeKYC(backoffice.removeUserFromRegistry)}
             >
               Remove ME from Registry
             </Button>
