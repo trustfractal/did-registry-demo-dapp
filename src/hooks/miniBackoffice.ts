@@ -23,14 +23,6 @@ interface UnregisteredUser {
   addUserToRegistry: () => Promise<void>;
 }
 
-interface KYCAbsent {
-  status: "KYCAbsent";
-  fractalId: string;
-  approveUser: () => Promise<void>;
-  unRegisterUser: () => Promise<void>;
-  addUserToRegistry: () => Promise<void>;
-}
-
 interface KYCApproved {
   status: "KYCApproved";
   fractalId: string;
@@ -40,7 +32,6 @@ interface KYCApproved {
 export type Backoffice =
   | Unconfigured
   | UnregisteredUser
-  | KYCAbsent
   | KYCApproved
   | Loading
   | Error;
@@ -157,32 +148,11 @@ export const useMiniBackoffice = (
     return { status: "Loading" };
   }
 
-  if (kycStatus) {
-    return {
-      status: "KYCApproved",
-      fractalId,
-      removeUserFromRegistry: reportTransactionTo(setFractalId, () =>
-        selfServeRegistryOperator
-          .connect(signer)
-          .removeSelfFromRegistry(KYCList)
-      ),
-    };
-  }
-
-  // should we remove this? We should never get here. If so, remove from MiniBackOffice component as well.
   return {
-    status: "KYCAbsent",
+    status: "KYCApproved",
     fractalId,
-    approveUser: reportTransactionTo(setKycStatus, () =>
-      selfServeRegistryOperator.connect(signer).addSelfToList(KYCList)
-    ),
-    unRegisterUser: reportTransactionTo(setFractalId, () =>
-      selfServeRegistryOperator.connect(signer).removeSelf()
-    ),
-    addUserToRegistry: reportTransactionTo(setKycStatus, () =>
-      selfServeRegistryOperator
-        .connect(signer)
-        .addSelfToRegistry(fractalId, KYCList)
+    removeUserFromRegistry: reportTransactionTo(setFractalId, () =>
+      selfServeRegistryOperator.connect(signer).removeSelfFromRegistry(KYCList)
     ),
   };
 };
