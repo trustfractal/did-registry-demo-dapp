@@ -43,11 +43,8 @@ export default function About() {
           </TitleContainer>
           <TextContainer>
             <Text size={TextSizes.NORMAL}>
-              This page is the frontend to a dApp that requires KYC. Normally
-              you wouldn’t even see the “Make transaction” button until you’re
-              KYC-approved, but we’re showing it already so you can test that it
-              only succeeds if you’re approved. It’s connected to a smart
-              contract that needs to verify your approval before proceeding.
+              This page is an example dApp that requires KYC and uses the
+              Fractal DID Registry.
             </Text>
           </TextContainer>
           <ButtonContainer>

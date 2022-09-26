@@ -20,28 +20,18 @@ interface Loading {
 
 interface UnregisteredUser {
   status: "UnregisteredUser";
-  registerUser: () => Promise<void>;
-  approveUser: () => Promise<void>;
-}
-
-interface KYCAbsent {
-  status: "KYCAbsent";
-  fractalId: string;
-  approveUser: () => Promise<void>;
-  unRegisterUser: () => Promise<void>;
+  addUserToRegistry: () => Promise<void>;
 }
 
 interface KYCApproved {
   status: "KYCApproved";
   fractalId: string;
-  disapproveUser: () => Promise<void>;
-  unRegisterUser: () => Promise<void>;
+  removeUserFromRegistry: () => Promise<void>;
 }
 
 export type Backoffice =
   | Unconfigured
   | UnregisteredUser
-  | KYCAbsent
   | KYCApproved
   | Loading
   | Error;
@@ -142,11 +132,10 @@ export const useMiniBackoffice = (
   if (fractalId === ZERO_USER) {
     return {
       status: "UnregisteredUser",
-      registerUser: reportTransactionTo(setFractalId, () =>
-        selfServeRegistryOperator.connect(signer).addSelf(keccak256(account))
-      ),
-      approveUser: reportTransactionTo(setKycStatus, () =>
-        selfServeRegistryOperator.connect(signer).addSelfToList(KYCList)
+      addUserToRegistry: reportTransactionTo(setFractalId, () =>
+        selfServeRegistryOperator
+          .connect(signer)
+          .addSelfToRegistry(keccak256(account), KYCList)
       ),
     };
   }
@@ -159,27 +148,11 @@ export const useMiniBackoffice = (
     return { status: "Loading" };
   }
 
-  if (kycStatus) {
-    return {
-      status: "KYCApproved",
-      fractalId,
-      disapproveUser: reportTransactionTo(setKycStatus, () =>
-        selfServeRegistryOperator.connect(signer).removeSelfFromList(KYCList)
-      ),
-      unRegisterUser: reportTransactionTo(setFractalId, () =>
-        selfServeRegistryOperator.connect(signer).removeSelf()
-      ),
-    };
-  }
-
   return {
-    status: "KYCAbsent",
+    status: "KYCApproved",
     fractalId,
-    approveUser: reportTransactionTo(setKycStatus, () =>
-      selfServeRegistryOperator.connect(signer).addSelfToList(KYCList)
-    ),
-    unRegisterUser: reportTransactionTo(setFractalId, () =>
-      selfServeRegistryOperator.connect(signer).removeSelf()
+    removeUserFromRegistry: reportTransactionTo(setFractalId, () =>
+      selfServeRegistryOperator.connect(signer).removeSelfFromRegistry(KYCList)
     ),
   };
 };

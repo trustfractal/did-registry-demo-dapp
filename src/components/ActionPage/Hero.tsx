@@ -95,10 +95,6 @@ export default function Hero() {
         status =
           " but your address is not in the DID Registry. So, you can't purchase yet! Use the Backoffice control in step #2 to update the DID Registry.";
         break;
-      case "KYCAbsent":
-        status =
-          " and your address is in the DID Registry but it is not in the KYC List. So, you can't purchase yet! Use the Backoffice control in step #2 to update the DID Registry.";
-        break;
       case "KYCApproved":
         status =
           ", your address is in the DID Registry AND you are in the KYC List. So, you can purchase! ";

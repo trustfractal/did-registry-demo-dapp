@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button, Card as OriginalCard, Text } from "../ui";
 import Collapsible from "../ui/Collapsible";
 import { TextSizes } from "../ui/Text";
-import { CenteredElement, CenteredFlexElement } from "../ui/CenteredElement";
+import { CenteredElement } from "../ui/CenteredElement";
 import { unreachable } from "../../lib/types";
 import { Backoffice } from "../../hooks/miniBackoffice";
 
@@ -29,22 +29,6 @@ export const SingleText = ({ children }: { children: string }) => (
   </>
 );
 
-const addKYC = async (
-  registerUser: () => Promise<void>,
-  approveUser: () => Promise<void>
-): Promise<void> => {
-  await registerUser();
-  await approveUser();
-};
-
-const removeKYC = async (
-  unRegisterUser: () => Promise<void>,
-  disapproveUser: () => Promise<void>
-): Promise<void> => {
-  await disapproveUser();
-  await unRegisterUser();
-};
-
 export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
   let content;
   switch (backoffice.status) {
@@ -56,50 +40,22 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
         <>
           <Text size={TextSizes.SMALL}>
             You are not in the Registry. Click the button to add yourself.
-            <Collapsible fill={"white"}>
-              <>
-                Normally, you would need to onboard with a KYC level like{" "}
-                <strong>Plus</strong>. Then, once your information is approved
-                you would be added to Registry by Fractal. Clicking the{" "}
-                <strong>Add ME to Registry</strong> button{" "}
-                <strong>simulates</strong> that process.{" "}
-              </>
-            </Collapsible>
           </Text>
+          <Collapsible fill={"white"}>
+            <>
+              Normally, you would need to onboard with a KYC level like{" "}
+              <strong>Plus</strong>. Then, once your information is approved you
+              would be added to Registry by Fractal. Clicking the{" "}
+              <strong>Add ME to Registry</strong> button{" "}
+              <strong>simulates</strong> that process.{" "}
+            </>
+          </Collapsible>
           <NewLine />
           <CenteredElement>
-            <Button
-              onClick={() =>
-                void addKYC(backoffice.registerUser, backoffice.approveUser)
-              }
-            >
+            <Button onClick={() => void backoffice.addUserToRegistry()}>
               Add ME to Registry
             </Button>
           </CenteredElement>
-        </>
-      );
-      break;
-    case "KYCAbsent":
-      content = (
-        <>
-          <Text size={TextSizes.EXTRA_SMALL}>
-            🚫 You are not in the KYC List. Click a button to either add your
-            wallet address to the KYC list or remove it from the Registry.
-            Clicking <strong>Add KYC</strong> is what would happen when your
-            user onboards with Fractal with a KYC level like{" "}
-            <strong>Plus</strong>. Clicking the button will initiate a
-            transaction from your wallet.
-          </Text>
-          <NewLine />
-          <CenteredFlexElement>
-            {" "}
-            <Button onClick={backoffice.approveUser as () => void}>
-              Add KYC
-            </Button>
-            <Button onClick={backoffice.unRegisterUser as () => void}>
-              Remove Wallet Address
-            </Button>
-          </CenteredFlexElement>
         </>
       );
       break;
@@ -112,14 +68,7 @@ export const MiniBackoffice = ({ backoffice }: { backoffice: Backoffice }) => {
           </Text>
           <NewLine />
           <CenteredElement>
-            <Button
-              onClick={() =>
-                void removeKYC(
-                  backoffice.disapproveUser,
-                  backoffice.unRegisterUser
-                )
-              }
-            >
+            <Button onClick={() => void backoffice.removeUserFromRegistry()}>
               Remove ME from Registry
             </Button>
           </CenteredElement>
